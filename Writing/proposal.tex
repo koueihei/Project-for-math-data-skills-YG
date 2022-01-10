@@ -1,0 +1,57 @@
+%!TEX program = pdflatex
+% Full chain: pdflatex -> bibtex -> pdflatex -> pdflatex
+\documentclass[11pt,en,cite=authoryear]{elegantpaper}
+
+\title{Forecasting Commodity Futures Returns with High-Frequency Macro Factors}
+\author{Yao Jingyuan \\ 2001212407 \and Gao Xiang \\ 2001212335}
+% cmd for this doc
+\usepackage{array}
+\newcommand{\ccr}[1]{\makecell{{\color{#1}\rule{1cm}{1cm}}}}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Motivation}
+Theoretically, stocks, bonds, commodities and other major assets are the mapping of the macro economy, so it is necessary to study the macro economy to guide investment. Selective use of high-frequency macro data to build macro risk factors will give us greater advantages in investment. So far, we have thoroughly studied the relationship between bonds, stocks and macro data, and have also done data analysis practice in these aspects. Commodity futures is a relatively unfamiliar investment target for us, and we only have a superficial understanding of the theory, but have not actually dealt with and analyzed the relationship between commodity futures and macroeconomic indicators. Therefore, in order to further explore the characteristics of commodity futures, we hope to conduct data analysis over this topic. By exploring the relationship between commodity futures and a series of macroeconomic data and indicators, we hope to predict commodity futures returns and test the robustness of the prediction results. We also wonder whether there might be a risk premium for the macroeconomic sensitivity of different varieties and, if so, whether it could be explained, or in part, by the conclusions given by Erb et al. (2006).
+
+\section{Data}
+In terms of commodity futures, we will cover more than 10 categories, 
+including agricultural products, energy and chemicals, non-ferrous metals and other mainstream commodity futures categories. 
+The futures prices of these commodities are the data we are going to use. 
+On macro data, we plan to use 14 representative high-frequency macroeconomic indicators as the basic indicators which are able to fully reflect the status of the macroeconomy, 
+including steel production volume, coal consumption, blast furnace capacity utilization, auto steel tire starts, 
+commercial housing deal area, agricultural prices index, PPI and other key indicators. 
+These indicators cover both supply-side production and demand-side consumption and investment indicators, 
+as well as measures of inflation. The above data are all daily data. 
+If there is no daily data available, weekly or monthly data of these indicators will be alternatives.
+We will use Windapi (Wind Data Service is a financial data provider in China) to download our data.
+
+\section{Indicator Construction}
+Based on these economic indicators, we will construct effective macro factors advised in economic literatures, and use these macro factors to forecast asset price. For example, Erb et al. (2006) described the inflation beta factor according to the relationship between inflation and commodities. The authors examine the correlation between the Goldman Sachs Commodity Index (GSCI) and American inflation: the GSCI does better when inflation rises and worse when it does not. They also found that different varieties had different hedges against inflation.
+
+Particularly, we employ rolling window method to construct the indicators.
+The methods to construct the indicator here is designed by Wang et al. (2018), performing well under the circumstances when variables have autocorrelation. 
+
+\begin{equation}
+	C D_{A R}=\sqrt{\frac{2 T}{N(N-1)}}\left(\sum_{i=1}^{N-1} \sum_{j=i+1}^{N} \hat{\rho}_{i j, A R}\right)
+\end{equation}
+where
+\begin{equation}
+	\hat{\rho}_{ij, A R}=\frac{T^{-1} \sum_{t=1}^{T} \hat{e}_{t, i, k} \hat{e}_{t, j, k}}{\sqrt{T^{-1} \sum_{t=1}^{T} \hat{e}_{t, i, k}^{2}} \sqrt{T^{-1} \sum_{t=1}^{T} \hat{e}_{t, j, k}^{2}}}
+\end{equation}
+where
+\begin{equation}
+	\hat{\phi}_{i}(L) r_{i,t}=\hat{e}_{i, t, k} \quad \text { and } \quad \hat{\phi}_{j}(L) r_{j,t}=\hat{e}_{j,t, k}
+\end{equation}
+where $r_i$,$r_j$ denotes different variables.
+After constructing indicators, we will conduct rolling-window forecast on assest prices using OLS method
+and measure the performance by comparing them with historical average forecasting.
+
+\section{Visualization}
+Given the above data and indicators, we may want to draw a graph to visualize the trend relationship between the various commodity futures and the macro indicators we construct. In addition, we will construct portfolios based on the historical returns of commodity futures, so we will also visualize the market performance of historical returns and portfolio strategies.
+
+
+\end{document}
